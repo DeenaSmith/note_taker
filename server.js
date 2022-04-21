@@ -1,9 +1,12 @@
 
-//Requirements
+//Requirements/Handling
 const express = require("express");
 const path = require("path");
 const fs = require("fs");
 const util = require("util");
+
+const readFileAsync = util.promisify(fs.readFile);
+const writeFileAsync = util.promisify(fs.writeFile);
 
 
 // Server
@@ -33,7 +36,7 @@ app.post("/api/notes", function(req, res) {
         note.id = notes.lenth + 1;
         notes.push(note);
     }).then(function(notes) {
-        writeFileAsynch("./develop/db/db.json", JSON.stringify(notes));
+        writeFileAsync("./develop/db/db.json", JSON.stringify(notes));
         res.json(note);
     })
 
@@ -43,11 +46,22 @@ app.post("/api/notes", function(req, res) {
 
 // Routes that push to HTML pages
 app.get("/notes", function(req, res) {
-    
-})
+    res.sendFile(path.join(__dirname, "./develop/public/notes.html"));
+});
+
+
+app.get("/", function(req, res) {
+    res.sendFile(path.join(__dirname, "./develop/public/index.html"));
+});
+
+
+app.get("*", function(req, res) {
+    res.sendFile(path.join(__dirname, "./develop/public/index.html"));
+});
 
 
 
+// PORT/Listener
 app.listen(PORT, () => {
     console.log(`API server now on port ${PORT}!`);
 });
