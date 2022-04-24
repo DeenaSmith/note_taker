@@ -1,3 +1,4 @@
+// const { json } = require("./express/lib/response");
 
 let noteTitle;
 let noteText;
@@ -72,6 +73,7 @@ const handleNoteSave = () => {
         title: noteTitle.value,
         text: noteText.value,
     };
+    console.log('newNote', newNote)
     saveNote(newNote).then(() => {
         getAndRenderNotes();
         renderActiveNote();
@@ -120,6 +122,7 @@ const handleRenderSaveBtn = () => {
 // Render the list of note titles
 const renderNoteList = async (notes) => {
     let jsonNotes = await notes.json();
+    console.log('jsonNotes', jsonNotes)
     if (window.location.pathname === '/notes') {
         noteList.forEach((el) => (el.innerHTML = ''));
     }

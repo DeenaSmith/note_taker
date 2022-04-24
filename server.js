@@ -15,13 +15,13 @@ const app = express();
 
 app.use(express.urlencoded({ extended: true }));
 app.use(express.json());
-app.use(express.static('public'));
-
+app.use(express.static('./develop/public'));
 
 
 // Routes/Requests
-app.get("api/notes", function(req, res) {
+app.get("/api/notes", function(req, res) {
     readFileAsync("./develop/db/db.json", "utf8").then(function(data) {
+        console.log('data', JSON.parse(data))
         notes = [].concat(JSON.parse(data))
         res.json(notes);
     })
@@ -32,9 +32,11 @@ app.get("api/notes", function(req, res) {
 app.post("/api/notes", function(req, res) {
     const note = req.body;
     readFileAsync("./develop/db/db.json", "utf8").then(function(data) {
+        console.log('data', data)
         const notes = [].concat(JSON.parse(data));
-        note.id = notes.lenth + 1;
+        note.id = notes.length + 1;
         notes.push(note);
+        return notes
     }).then(function(notes) {
         writeFileAsync("./develop/db/db.json", JSON.stringify(notes));
         res.json(note);

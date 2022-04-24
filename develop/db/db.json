@@ -1,7 +1,1 @@
-
-[
-    {
-        "title":"Test Title",
-        "text":"Test text"
-    }
-]
+[{"title":"Lunch","text":"Lunch today, 12:30","id":1},{"title":"Meeting","text":"Meeting at 3pm","id":2}]
